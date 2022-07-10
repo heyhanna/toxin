@@ -1,0 +1,6 @@
+# VSCode Settings
+.vscode/settings.json
+
+# Zig Output
+zig-cache/
+zig-out/
