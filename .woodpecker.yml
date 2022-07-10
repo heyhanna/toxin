@@ -8,4 +8,5 @@ pipeline:
     commands:
     - apk add curl jq git
     - curl -sL $(curl -sL $REPO | jq -r '.master."x86_64-linux".tarball') | tar xJ
-    - ./zig-linux-*/zig build -fno-stage1 -Dtarget=x86_64-linux-musl
+    - ./zig-linux-*/zig build -fno-stage1 -Dtarget=x86_64-linux-musl -Dleaks=true
+    - ./zig-out/bin/toxin --version
