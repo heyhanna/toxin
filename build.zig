@@ -16,6 +16,8 @@ pub fn build(b: *std.build.Builder) anyerror!void {
 
     const options = b.addOptions();
     const ref = try b.exec(&.{ "git", "rev-parse", "--short", "HEAD" });
+    const leaks = b.option(bool, "leaks", "Enable the use of leak detection");
+    options.addOption(bool, "leaks", leaks orelse false);
     options.addOption([]const u8, "revision", ref);
     exe.addOptions("options", options);
 
