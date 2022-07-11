@@ -6,8 +6,9 @@ const message =
     \\
     \\usage: toxin [options] <arguments>
     \\
-    \\-h, --help      Shows this help message.
-    \\-v, --version   Shows the current version.
+    \\-h, --help      Shows this help message
+    \\-v, --version   Shows the current version
+    \\--insecure      Disable certificate errors
     \\
 ;
 
