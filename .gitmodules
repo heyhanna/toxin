@@ -1,3 +1,15 @@
 [submodule "vendor/zig-args"]
 	path = vendor/zig-args
 	url = https://github.com/MasterQ32/zig-args
+[submodule "vendor/zig-zlib"]
+	path = vendor/zig-zlib
+	url = https://github.com/mattnite/zig-zlib.git
+[submodule "vendor/zig-mbedtls"]
+	path = vendor/zig-mbedtls
+	url = https://github.com/mattnite/zig-mbedtls.git
+[submodule "vendor/zig-libssh2"]
+	path = vendor/zig-libssh2
+	url = https://github.com/mattnite/zig-libssh2.git
+[submodule "vendor/zig-libgit2"]
+	path = vendor/zig-libgit2
+	url = https://github.com/mattnite/zig-libgit2
