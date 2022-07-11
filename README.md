@@ -15,7 +15,7 @@ curl -sL $(curl -sL $REPO | jq -r '.master."x86_64-linux".tarball') | tar xJ
 After you download the Zig compiler and (optionally) add it to your path, you can build the project.
 
 ```txt
-git clone -b dev --recursive https://git.lgbt.pm/hanna/toxin
+git clone -b dev --recursive https://codeberg.org/hanna/toxin
 cd toxin && zig build -fno-stage1 -Dleaks=true
 ```
 
