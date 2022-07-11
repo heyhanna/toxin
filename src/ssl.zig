@@ -21,7 +21,9 @@ const locations: []const [:0]const u8 = &.{
     "/sys/lib/tls/ca.pem",
 };
 
-pub fn load(allocator: std.mem.Allocator) !void {
+pub const Error = std.mem.Allocator.Error || std.process.GetEnvVarOwnedError;
+
+pub fn load(allocator: std.mem.Allocator) Error!void {
     switch (builtin.target.os.tag) {
         .windows, .macos => {},
         else => std.log.warn("certificates for {s} not implemented", .{builtin.target.os.tag}),
