@@ -21,7 +21,7 @@ pub fn build(b: *std.build.Builder) anyerror!void {
     options.addOption([]const u8, "revision", ref);
     exe.addOptions("options", options);
 
-    vendor.link(b, exe, target, mode);
+    try vendor.link(b, exe, target, mode);
     exe.setBuildMode(mode);
     exe.setTarget(target);
     exe.linkLibC();
