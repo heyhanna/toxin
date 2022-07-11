@@ -16,7 +16,7 @@ After you download the Zig compiler and (optionally) add it to your path, you ca
 
 ```txt
 git clone -b dev --recursive https://codeberg.org/hanna/toxin
-cd toxin && zig build -fno-stage1 -Dleaks=true
+cd toxin && zig build -Dleaks=true
 ```
 
 By design Toxin builds against [musl libc](https://musl.libc.org/) on linux, and gnu libc on every
