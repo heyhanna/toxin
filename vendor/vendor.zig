@@ -6,6 +6,7 @@ const mbedtls = @import("zig-mbedtls/mbedtls.zig");
 
 const packages = [_]std.build.Pkg{
     .{ .name = "args", .source = .{ .path = "vendor/zig-args/args.zig" } },
+    .{ .name = "toml", .source = .{ .path = "vendor/zig-toml/src/toml.zig" } },
 };
 
 pub fn link(

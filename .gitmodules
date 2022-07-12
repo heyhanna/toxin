@@ -13,3 +13,6 @@
 [submodule "vendor/zig-libgit2"]
 	path = vendor/zig-libgit2
 	url = https://github.com/mattnite/zig-libgit2
+[submodule "vendor/zig-toml"]
+	path = vendor/zig-toml
+	url = https://github.com/aeronavery/zig-toml.git
