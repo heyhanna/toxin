@@ -28,5 +28,5 @@ pub fn main() anyerror!void {
     if (cli.options.help) try help.print(stdout, .full);
     if (cli.options.version) try help.print(stdout, .version);
     if (cli.positionals.len <= 0) try help.print(stdout, .usage);
-    if (cli.options.insecure) git.insecure() else try certs.load(allocator);
+    if (cli.options.insecure) certs.insecure() else try certs.load(allocator);
 }

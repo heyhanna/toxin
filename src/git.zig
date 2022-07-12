@@ -2,9 +2,6 @@ const std = @import("std");
 const bind = @import("bind/git2.zig");
 const builtin = @import("builtin");
 
-extern fn git_mbedtls__insecure() void;
-pub const insecure = git_mbedtls__insecure;
-
 const Head = struct { oid: [bind.GIT_OID_HEXSZ]u8, name: []const u8 };
 const State = struct { allocator: std.mem.Allocator, base_path: []const u8 };
 const Options = struct { ref: ?[]const u8 = null, recurse: bool = false };

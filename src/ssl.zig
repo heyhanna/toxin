@@ -3,6 +3,9 @@ const builtin = @import("builtin");
 
 extern fn git_mbedtls__set_cert_location(path: ?[*:0]const u8, file: ?[*:0]const u8) c_int;
 
+extern fn git_mbedtls__insecure() void;
+pub const insecure = git_mbedtls__insecure;
+
 const locations: []const [:0]const u8 = &.{
     "/etc/ssl/certs/ca-certificates.crt",
     "/etc/pki/tls/certs/ca-bundle.crt",
