@@ -1,6 +1,6 @@
 const std = @import("std");
 const bind = @import("bind/git2.zig");
-const builtin = @import("builtin");
+const os_tag = @import("builtin").target.os.tag;
 
 const Head = struct { oid: [bind.GIT_OID_HEXSZ]u8, name: []const u8 };
 const State = struct { allocator: std.mem.Allocator, base_path: []const u8 };
@@ -56,7 +56,7 @@ pub fn clone(
         if (err != 0) return Error.Submodule;
     }
 
-    if (builtin.target.os.tag != .windows) {
+    if (os_tag != .windows) {
         const dot_dir = try std.fs.path.join(allocator, &.{ path, ".git" });
         defer allocator.free(dot_dir);
         try std.fs.cwd().deleteTree(dot_dir);
@@ -160,7 +160,7 @@ fn submoduleImpl(sm: ?*bind.git_submodule, sm_name: [*c]const u8, payload: ?*any
     err = bind.git_submodule_foreach(repo, submoduleCb, &state);
     if (err != 0) return Error.Submodule;
 
-    if (builtin.target.os.tag != .windows) {
+    if (os_tag != .windows) {
         const dot_dir = try std.fs.path.join(allocator, &.{ base_path, ".git" });
         defer allocator.free(dot_dir);
 

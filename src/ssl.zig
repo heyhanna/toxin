@@ -1,5 +1,5 @@
 const std = @import("std");
-const builtin = @import("builtin");
+const os_tag = @import("builtin").target.os.tag;
 
 extern fn git_mbedtls__set_cert_location(path: ?[*:0]const u8, file: ?[*:0]const u8) c_int;
 
@@ -27,9 +27,9 @@ const locations: []const [:0]const u8 = &.{
 pub const Error = std.mem.Allocator.Error || std.process.GetEnvVarOwnedError;
 
 pub fn load(allocator: std.mem.Allocator) Error!void {
-    switch (builtin.target.os.tag) {
+    switch (os_tag) {
         .windows, .macos => {},
-        else => std.log.warn("certificates for {s} not implemented", .{builtin.target.os.tag}),
+        else => std.log.warn("certificates for {s} not implemented", .{os_tag}),
         .linux, .aix, .dragonfly, .netbsd, .freebsd, .openbsd, .plan9, .solaris => {
             const env_var = try std.process.hasEnvVar(allocator, "SSL_CERT_FILE");
             const files: []const [:0]const u8 = if (!env_var) locations else blk: {
