@@ -1,6 +1,8 @@
 const std = @import("std");
 const options = @import("options");
 
+const HelpLevel = enum { usage, version, full };
+
 const message =
     \\https://codeberg.org/hanna/toxin
     \\
@@ -18,8 +20,6 @@ const message =
     \\system follows the XDG specifications.
     \\
 ;
-
-const HelpLevel = enum { usage, version, full };
 
 pub fn print(stdout: std.fs.File, level: HelpLevel) std.os.WriteError!void {
     const version = "toxin version " ++ options.revision;
