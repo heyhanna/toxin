@@ -4,3 +4,6 @@
 # Zig Output
 zig-cache/
 zig-out/
+
+# Test Config
+toxin.toml
