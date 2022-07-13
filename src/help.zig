@@ -8,7 +8,14 @@ const message =
     \\
     \\-h, --help      Shows this help message
     \\-v, --version   Shows the current version
+    \\-c, --config    Specify the config location
     \\--insecure      Disable certificate errors
+    \\
+    \\The config location can be set with the --config
+    \\option or by setting the TOXIN_CONFIG variable,
+    \\by default it is in either $HOME/.config/toxin.toml
+    \\or $XDG_CONFIG_HOME/toxin.toml, depending if your
+    \\system follows the XDG specifications.
     \\
 ;
 
