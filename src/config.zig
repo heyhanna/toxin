@@ -13,13 +13,15 @@ pub const Plugin = struct {
     path: ?[]const u8,
 };
 
-pub fn init(allocator: std.mem.Allocator) !Self {
+pub fn init(allocator: std.mem.Allocator, c_path: ?[]const u8) !Self {
     var env = try std.process.getEnvMap(allocator);
     defer env.deinit();
 
     // zig fmt: off
-    const config_path = if (env.get("TOXIN_CONFIG_DIR")) |path|
-        try std.fs.path.join(allocator, &.{ path, "toxin.toml" })
+    const config_path = if (c_path) |path| 
+        try allocator.dupe(u8, path)
+    else if (env.get("TOXIN_CONFIG")) |path|
+        try allocator.dupe(u8, path)
     else if (env.get("XDG_CONFIG_HOME")) |path|
         try std.fs.path.join(allocator, &.{ path, "toxin.toml" })
     else if (env.get("HOME")) |path|
@@ -28,8 +30,13 @@ pub fn init(allocator: std.mem.Allocator) !Self {
     defer allocator.free(config_path);
     // zig fmt: on
 
-    std.fs.accessAbsolute(config_path, .{}) catch return error.ConfigNotFound;
-    const config_file = try std.fs.openFileAbsolute(config_path, .{ .mode = .read_only });
+    const config_file = if (std.fs.path.isAbsolute(config_path)) blk: {
+        std.fs.accessAbsolute(config_path, .{}) catch return error.ConfigNotFound;
+        break :blk try std.fs.openFileAbsolute(config_path, .{ .mode = .read_only });
+    } else blk: {
+        std.fs.cwd().access(config_path, .{}) catch return error.ConfigNotFound;
+        break :blk try std.fs.cwd().openFile(config_path, .{ .mode = .read_only });
+    };
     defer config_file.close();
 
     const source = try config_file.readToEndAlloc(allocator, std.math.maxInt(usize));

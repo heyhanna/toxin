@@ -16,7 +16,8 @@ pub fn main() anyerror!void {
     // zig fmt: on
 
     const cli = try args.parseForCurrentProcess(struct {
-        pub const shorthands = .{ .h = "help", .v = "version" };
+        pub const shorthands = .{ .h = "help", .v = "version", .c = "config" };
+        config: ?[]const u8 = null,
         insecure: bool = false,
         version: bool = false,
         help: bool = false,
@@ -31,7 +32,7 @@ pub fn main() anyerror!void {
     if (cli.positionals.len <= 0) try help.print(stdout, .usage);
     if (cli.options.insecure) certs.insecure() else try certs.load(allocator);
 
-    const config = try Config.init(allocator);
+    const config = try Config.init(allocator, cli.options.config);
     defer config.deinit();
 
     const cache_path = config.cache() orelse return error.CacheNotSet;
