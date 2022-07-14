@@ -3,6 +3,7 @@ const args = @import("args");
 const help = @import("help/help.zig");
 const use_leaks = @import("options").leaks;
 const Config = @import("config.zig");
+const Cache = @import("cache.zig");
 const certs = @import("ssl.zig");
 const git = @import("git.zig");
 
@@ -35,11 +36,6 @@ pub fn main() anyerror!void {
     const config = try Config.init(allocator, cli.options.config);
     defer config.deinit();
 
-    const resolved_cache = try std.fs.path.resolve(allocator, &.{try config.cache()});
-    defer allocator.free(resolved_cache);
-
-    std.fs.makeDirAbsolute(resolved_cache) catch |err| switch (err) {
-        std.os.MakeDirError.PathAlreadyExists => {},
-        else => return err,
-    };
+    var cache = try Cache.init(allocator, try config.cache());
+    defer cache.deinit();
 }
