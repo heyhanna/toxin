@@ -18,7 +18,10 @@ pub fn build(b: *std.build.Builder) anyerror!void {
     const ref = try b.exec(&.{ "git", "rev-parse", "--short", "HEAD" });
     const leaks = b.option(bool, "leaks", "Enable the use of leak detection");
     options.addOption(bool, "leaks", leaks orelse false);
-    options.addOption([]const u8, "revision", ref);
+
+    const v_opt = b.option([]const u8, "version", "Specify a manual version string");
+    const v_str = if (v_opt) |v| try std.fmt.allocPrint(b.allocator, "{s}\n", .{v}) else ref;
+    options.addOption([]const u8, "revision", v_str);
     exe.addOptions("options", options);
 
     try vendor.link(b, exe, target, mode);
