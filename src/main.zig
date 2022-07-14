@@ -1,6 +1,6 @@
 const std = @import("std");
 const args = @import("args");
-const help = @import("help.zig");
+const help = @import("help/help.zig");
 const use_leaks = @import("options").leaks;
 const Config = @import("config.zig");
 const certs = @import("ssl.zig");
