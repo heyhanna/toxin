@@ -35,8 +35,10 @@ pub fn main() anyerror!void {
     const config = try Config.init(allocator, cli.options.config);
     defer config.deinit();
 
-    const cache_path = config.cache() orelse return error.CacheNotSet;
-    std.fs.makeDirAbsolute(cache_path) catch |err| switch (err) {
+    const resolved_cache = try std.fs.path.resolve(allocator, &.{try config.cache()});
+    defer allocator.free(resolved_cache);
+
+    std.fs.makeDirAbsolute(resolved_cache) catch |err| switch (err) {
         std.os.MakeDirError.PathAlreadyExists => {},
         else => return err,
     };
