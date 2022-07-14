@@ -48,8 +48,8 @@ pub fn init(allocator: std.mem.Allocator, c_path: ?[]const u8) !Self {
     };
 }
 
-pub fn cache(self: Self) ?[]const u8 {
-    return if (self.table.keys.get("cache")) |v| v.String else null;
+pub fn cache(self: Self) ![]const u8 {
+    return if (self.table.keys.get("cache")) |v| v.String else error.CacheNotSet;
 }
 
 pub fn plugins(self: Self) !?[]const Plugin {
